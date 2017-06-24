@@ -1,0 +1,45 @@
+{
+	"name": "Turbo Button",
+	"description": "Turn on/off Opera Turbo with one click",
+	"author": "Nekomajin",
+	"manifest_version": 2,
+	"version": "1.0",
+	"background": 
+	{
+		"persistent": false,
+		"scripts": ["background.js"]
+	},
+	"browser_action": 
+	{
+		"default_icon": "icons/icon32.png",
+		"default_title": "Turbo Button"
+	},
+	"commands":
+	{
+		"_execute_browser_action":
+		{
+			"suggested_key": {"default": "Alt+T"}
+		}
+	},
+	"icons": 
+	{
+		"128": "icons/icon128.png", 
+		"64": "icons/icon64.png", 
+		"48": "icons/icon48.png", 
+		"38": "icons/icon38.png", 
+		"32": "icons/icon32.png", 
+		"19": "icons/icon19.png", 
+		"16": "icons/icon16.png"
+	},
+	"options_ui": 
+	{
+		"page": "options/options.html",
+		"open_in_tab": true
+	},
+	"permissions": 
+	[
+		"notifications",
+		"offroad"
+	],
+	"content_security_policy": "script-src 'self'; object-src 'self';"
+}
