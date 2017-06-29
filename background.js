@@ -24,45 +24,76 @@ chrome.runtime.onInstalled.addListener(function(details)
 			chrome.runtime.openOptionsPage();
 		});
 	}
+	
+	get();
 });
 
 // set toolbar button on extension load
-window.addEventListener("load", function ()
+chrome.runtime.onStartup.addListener(function ()
 {
-	chrome.browserAction.setBadgeBackgroundColor({color: "#CC0000"});
-	opr.offroad.enabled.get({}, function(details)
-	{
-		if (details.levelOfControl === "controllable_by_this_extension" || details.levelOfControl === "controlled_by_this_extension")
-		{
-			if (details.value == true)
-			{
-				chrome.browserAction.setBadgeText({text: "on"});
-			}
-			else
-			{
-				chrome.browserAction.setBadgeText({text: "off"});
-			}
-		}
-	});
+	get();
 });
 
 // make the toolbar button work
 chrome.browserAction.onClicked.addListener(function ()
 {
+	set();
+});
+
+function get()
+{
 	opr.offroad.enabled.get({}, function(details)
 	{
 		if (details.levelOfControl === "controllable_by_this_extension" || details.levelOfControl === "controlled_by_this_extension")
 		{
 			if (details.value == true)
 			{
-				opr.offroad.enabled.set({value:  false});
-				chrome.browserAction.setBadgeText({text: "off"});
+				badge("on");
 			}
 			else
 			{
-				opr.offroad.enabled.set({value:  true});
-				chrome.browserAction.setBadgeText({text: "on"});
+				badge("off");
 			}
 		}
 	});
-});
+}
+
+function set()
+{
+	opr.offroad.enabled.get({}, function(details)
+	{
+		if (details.levelOfControl === "controllable_by_this_extension" || details.levelOfControl === "controlled_by_this_extension")
+		{
+			if (details.value == true)
+			{
+				opr.offroad.enabled.set({value:  false}, function ()
+				{
+					badge("off");
+				});
+			}
+			else
+			{
+				opr.offroad.enabled.set({value:  true}, function ()
+				{
+					badge("on");
+				});
+			}
+		}
+	});
+}
+
+function badge(state)
+{
+	if (state === "on")
+	{
+		chrome.browserAction.setBadgeText({text: "on"});
+		chrome.browserAction.setBadgeTextColor({color: "#ffffff"});
+		chrome.browserAction.setBadgeBackgroundColor({color: "#cc0000"});
+	}
+	else if (state === "off")
+	{
+		chrome.browserAction.setBadgeText({text: "off"});
+		chrome.browserAction.setBadgeTextColor({color: "#ffffff"});
+		chrome.browserAction.setBadgeBackgroundColor({color: "#cc00ff"});
+	}
+}

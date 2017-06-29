@@ -1,9 +1,9 @@
 {
 	"name": "Turbo Button",
-	"description": "Turn on/off Opera Turbo with one click",
+	"description": "Toggle Opera Turbo with one click",
 	"author": "Nekomajin",
 	"manifest_version": 2,
-	"version": "1.0",
+	"version": "1.1",
 	"background": 
 	{
 		"persistent": false,
